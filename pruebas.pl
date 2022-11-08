@@ -13,6 +13,12 @@ agregarInicio(E, L, [E|L]).
 
 %3. eliminarElemento(Elemento, Lista, ListaResultante)
 
+eliminarElemento(_, [], []).
+eliminarElemento(E, [E|T], Res):-
+	eliminarElemento(E, T, Res), 
+	!.
+eliminarElemento(E, [H|T], [H|Res]):-
+	eliminarElemento(E, T, Res).
 
 %4. cons(Elemento, Lista, ListaResultante)
 cons(E, [], [E]).
@@ -94,6 +100,11 @@ promedio([H|T], Prom):-
 	Prom is Suma/Longitud.
 
 %13. eliminarRepetidos(Lista, ListaResultante)
+eliminarRepetidos([], []).
+eliminarRepetidos([H|T], R):-
+	eliminarElemento(H, T, Raux),
+	eliminarRepetidos(Raux, R2),
+	append([H], R2, R).
 
 %14. agregarFinal(Elemento, Lista, ListaResultante)
 agregarFinal(E, [], [E]).
@@ -110,4 +121,17 @@ longitud([_|T], Largo):-
 
 %16. contarRepetidos(Elemento, Lista, Repeticiones)
 
+contarRepetidos(_, [], 0).
+contarRepetidos(E, [E|T], R):-
+	contarRepetidos(E, T, Raux),
+	R is Raux + 1.
+contarRepetidos(E, [_|T], R):-
+	contarRepetidos(E, T, R).
+
 %17. reemplazar(Elemento, ElemNuevo, Lista, ListaResultante)
+
+reemplazar(_, _, [], []).
+reemplazar(E, N, [E|T], [N|Raux]):-
+	reemplazar(E, N, T, Raux).
+reemplazar(E, N, [H|T], [H|Raux]):-
+	reemplazar(E, N, T, Raux).
